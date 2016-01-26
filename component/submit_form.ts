@@ -16,9 +16,19 @@ export class HttpApp {
 	constructor(public http: Http) {}
 
 	requestMovies() {
-		this.http.get('http://code2learn.me/imdb_top_250?offset=0')
+		this.http.get('https://code2learn.me/imdb_top_250?offset=0')
 			.map(res => res.json())
-			.subscribe(movie => this.movies = movie);
+			//.map(movie => _.values(movie))
+			.subscribe(movies => {
+				console.log(movies);
+				$('#table-movie').DataTable({
+					data: movies,
+					columns: [
+						{ title: "Rank" },
+						{ title: "Movie Name" }
+					]
+				});
+			});
 	}
 
 	get getRandomColor(): string {
