@@ -1,4 +1,4 @@
-# angular2-todo
+# angular2-http
 
 The purpose of this project is just for studying Angular 2 and TypeScript as well.
 
