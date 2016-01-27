@@ -10,23 +10,24 @@ import 'rxjs/add/operator/map';
 })
 
 export class HttpApp {
-	movies: Movie[];
+	//movies: Movie[];
 	colors: string[] = ['default', 'primary', 'success', 'info', 'warning', 'danger'];
 
 	constructor(public http: Http) {}
 
 	requestMovies() {
 		this.http.get('https://code2learn.me/imdb_top_250?offset=0')
-			.map(res => res.json())
-			//.map(movie => _.values(movie))
+			.map(res =>res.json())
 			.subscribe(movies => {
-				console.log(movies);
 				$('#table-movie').DataTable({
-					data: movies,
+					data: movies.map(movie => [movie.rank, movie.name]),
 					columns: [
 						{ title: "Rank" },
 						{ title: "Movie Name" }
-					]
+					],
+					responsive: true,
+					select: true,
+					fixedHeader: true
 				});
 			});
 	}
@@ -34,5 +35,10 @@ export class HttpApp {
 	get getRandomColor(): string {
 		var index = Math.floor((Math.random() * 10)) % this.colors.length;
 		return this.colors[index];
+	}
+
+	private convertMoviesData(movies: Movie[]) {
+		var moviesData = [];
+		//movies.map(movie => [])
 	}
 }
